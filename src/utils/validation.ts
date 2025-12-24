@@ -7,16 +7,10 @@ export const validateEmail = (email: string): boolean => {
   return emailRegex.test(email);
 };
 
-export const validatePassword = (password: string): string | null => {
-  if (password.length < 6) {
-    return 'Password must be at least 6 characters';
-  }
-  return null;
+export const validatePassword = (password: string): boolean => {
+  return typeof password === 'string' && password.length >= 6;
 };
 
-export const validateRequired = (value: string): string | null => {
-  if (!value || value.trim().length === 0) {
-    return 'This field is required';
-  }
-  return null;
+export const validateRequired = (value: string): boolean => {
+  return typeof value === 'string' && value.trim().length > 0;
 };

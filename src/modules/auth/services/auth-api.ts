@@ -45,14 +45,12 @@ export interface VerifyResponse {
  */
 export async function signup(data: SignupRequest): Promise<AuthResponse> {
   try {
-    const response = await apiClient.post('/api/auth/signup', data);
-    
-    // Store token in localStorage via apiClient interceptor
-    if (response.data.token) {
-      localStorage.setItem('token', response.data.token);
+    const response = await apiClient.post('/auth/signup', data);
+    // store token centrally via apiClient
+    if (response.token) {
+      apiClient.setToken(response.token);
     }
-    
-    return response.data;
+    return response;
   } catch (error: any) {
     throw new Error(
       error.response?.data?.error || 
@@ -69,14 +67,11 @@ export async function signup(data: SignupRequest): Promise<AuthResponse> {
  */
 export async function login(data: LoginRequest): Promise<AuthResponse> {
   try {
-    const response = await apiClient.post('/api/auth/login', data);
-    
-    // Store token in localStorage via apiClient interceptor
-    if (response.data.token) {
-      localStorage.setItem('token', response.data.token);
+    const response = await apiClient.post('/auth/login', data);
+    if (response.token) {
+      apiClient.setToken(response.token);
     }
-    
-    return response.data;
+    return response;
   } catch (error: any) {
     throw new Error(
       error.response?.data?.error || 
@@ -92,8 +87,8 @@ export async function login(data: LoginRequest): Promise<AuthResponse> {
  */
 export async function verifyToken(): Promise<VerifyResponse> {
   try {
-    const response = await apiClient.post('/api/auth/verify');
-    return response.data;
+    const response = await apiClient.post('/auth/verify');
+    return response;
   } catch (error: any) {
     throw new Error(
       error.response?.data?.error || 
@@ -107,6 +102,6 @@ export async function verifyToken(): Promise<VerifyResponse> {
  * Logout user (client-side only - clears token)
  */
 export function logout(): void {
-  localStorage.removeItem('token');
+  apiClient.clearToken();
   // Optionally: notify backend about logout (blacklist token)
 }

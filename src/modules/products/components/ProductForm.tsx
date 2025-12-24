@@ -6,8 +6,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button } from '@/src/components/ui/Button';
-import { Input } from '@/src/components/ui/Input';
+import { Button } from '@/components/atoms/Button';
+import { Input } from '@/components/atoms/Input';
 
 interface ProductFormProps {
   onSubmit: (data: {

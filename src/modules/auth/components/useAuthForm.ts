@@ -109,11 +109,38 @@ export function useAuthForm(options?: UseAuthFormOptions) {
           options.onSuccess();
         }
 
-        // Redirect if specified
-        const redirectPath = options?.redirectTo || '/dashboard';
+        // Redirect if specified (default to landing)
+        const redirectPath = options?.redirectTo || '/';
         router.push(redirectPath);
       } catch (err: any) {
-        setError(err.message || 'An error occurred. Please try again.');
+        // Log raw error for debugging
+        // eslint-disable-next-line no-console
+        console.error('Auth form submit error:', err);
+
+        let message = 'An error occurred. Please try again.';
+
+        // Axios-style response body
+        if (err?.response) {
+          try {
+            const status = err.response.status;
+            const data = err.response.data;
+            if (data?.error) message = data.error;
+            else if (data?.message) message = data.message;
+            else message = `Request failed with status ${status}`;
+          } catch (e) {
+            // fallback
+            message = 'An error occurred while processing the server response.';
+          }
+        } else if (err?.request) {
+          // request made but no response
+          message = 'Network Error: no response from server. Is the API gateway running?';
+        } else if (err?.message) {
+          message = String(err.message);
+        } else {
+          message = String(err);
+        }
+
+        setError(message);
       } finally {
         setIsLoading(false);
       }

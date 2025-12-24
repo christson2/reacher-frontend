@@ -3,17 +3,18 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import Button from '@/components/atoms/Button';
-import Input from '@/components/atoms/Input';
-import Card from '@/components/molecules/Card';
-import Form from '@/components/molecules/Form';
+import ReacherLogo from '@/components/home/ReacherLogo';
+import { Button } from '@/components/atoms/Button';
+import { Input } from '@/components/atoms/Input';
+import { Card } from '@/components/molecules/Card';
+import { Form } from '@/components/molecules/Form';
 import { useAuthForm } from '../components/useAuthForm';
 import { signup } from '../services/auth-api';
 
 export default function SignupPage() {
   const router = useRouter();
   const { isLoading, error, formErrors, clearError, handleSubmit } = useAuthForm({
-    redirectTo: '/dashboard',
+    redirectTo: '/',
   });
 
   const [formData, setFormData] = useState({
@@ -47,12 +48,14 @@ export default function SignupPage() {
     await handleSubmit(formData, 'signup', onSubmit);
   };
 
+  const passwordStrength = formData.password.length >= 8 ? 'Strong' : formData.password.length >= 6 ? 'Okay' : 'Weak';
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
-      <Card className="w-full max-w-md shadow-lg">
+      <Card className="w-full max-w-lg shadow-lg">
         {/* Header */}
-        <div className="mb-8 text-center">
-          <h1 className="text-4xl font-bold text-gray-900">Reacher</h1>
+        <div className="mb-6 text-center">
+          <ReacherLogo className="mx-auto" />
           <p className="mt-2 text-gray-600">Create your account</p>
         </div>
 
@@ -116,6 +119,12 @@ export default function SignupPage() {
             disabled={isLoading}
           />
 
+          <div className="text-sm mt-1">
+            <span className={`font-medium ${passwordStrength === 'Strong' ? 'text-green-600' : passwordStrength === 'Okay' ? 'text-yellow-600' : 'text-red-600'}`}>
+              Password strength: {passwordStrength}
+            </span>
+          </div>
+
           {/* Confirm Password Field */}
           <Input
             label="Confirm Password"
@@ -156,8 +165,14 @@ export default function SignupPage() {
             variant="primary"
             size="md"
             disabled={isLoading}
-            className="w-full"
+            className="w-full flex items-center justify-center gap-2"
           >
+            {isLoading && (
+              <svg className="w-4 h-4 animate-spin text-white" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" className="opacity-25" />
+                <path d="M4 12a8 8 0 018-8" stroke="currentColor" strokeWidth="4" className="opacity-75" />
+              </svg>
+            )}
             {isLoading ? 'Creating Account...' : 'Sign Up'}
           </Button>
         </form>

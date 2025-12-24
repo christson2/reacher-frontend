@@ -6,8 +6,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button } from '@/src/components/ui/Button';
-import { Card } from '@/src/components/ui/Card';
+import { Button } from '@/components/atoms/Button';
+import { Card } from '@/components/molecules/Card';
 import Link from 'next/link';
 
 interface ProductDetailProps {

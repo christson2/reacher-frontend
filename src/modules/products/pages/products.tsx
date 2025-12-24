@@ -10,7 +10,7 @@ import { SearchBar } from '../components/SearchBar';
 import { ProductCard } from '../components/ProductCard';
 import { getProducts } from '../services/product-api';
 import Link from 'next/link';
-import { Button } from '@/src/components/ui/Button';
+import { Button } from '@/components/atoms/Button';
 
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);

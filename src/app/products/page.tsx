@@ -2,7 +2,7 @@
  * /products - Products Listing Page
  */
 
-import { ProductsPage } from '@/src/modules/products/pages/products';
+import ProductsPage from '@/modules/products/pages/products';
 
 export default function Page() {
   return <ProductsPage />;

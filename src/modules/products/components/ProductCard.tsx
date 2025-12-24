@@ -7,8 +7,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Card } from '@/src/components/ui/Card';
-import { Button } from '@/src/components/ui/Button';
+import { Card } from '@/components/molecules/Card';
+import { Button } from '@/components/atoms/Button';
 
 interface ProductCardProps {
   id: string;

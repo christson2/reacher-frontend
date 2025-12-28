@@ -1,0 +1,1 @@
+self.__REACT_LOADABLE_MANIFEST="{\"src/app/home/page.tsx -> @/services/api/client\":{\"id\":\"src/app/home/page.tsx -> @/services/api/client\",\"files\":[]},\"src/components/home/RightPanel.tsx -> @/services/api/client\":{\"id\":\"src/components/home/RightPanel.tsx -> @/services/api/client\",\"files\":[]}}"
